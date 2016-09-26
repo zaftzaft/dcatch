@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"github.com/google/gopacket"
 	"github.com/google/gopacket/layers"
@@ -11,9 +12,24 @@ import (
 	"time"
 )
 
+var version = "0.0.1"
+
 func main() {
-	//handle, err := pcap.OpenLive("enp0s25", 65536, true, time.Second)
-	handle, err := pcap.OpenLive("any", 65536, true, time.Second)
+	var device string
+	flag.StringVar(&device, "i", "any", "interface name")
+
+	var showVersion bool
+	flag.BoolVar(&showVersion, "v", false, "show version")
+	flag.BoolVar(&showVersion, "version", false, "show version")
+
+	flag.Parse()
+
+	if showVersion {
+		fmt.Println("dcatch version ", version)
+		return
+	}
+
+	handle, err := pcap.OpenLive(device, 65536, true, time.Second)
 	if err != nil {
 		log.Fatal("pcap openlive err:", err)
 	}
