@@ -12,11 +12,14 @@ import (
 	"time"
 )
 
-var version = "0.0.1"
+var version = "0.0.2"
 
 func main() {
 	var device string
 	flag.StringVar(&device, "i", "any", "interface name")
+
+	var filename string
+	flag.StringVar(&filename, "r", "", "pcap file")
 
 	var showVersion bool
 	flag.BoolVar(&showVersion, "v", false, "show version")
@@ -29,9 +32,18 @@ func main() {
 		return
 	}
 
-	handle, err := pcap.OpenLive(device, 65536, true, time.Second)
-	if err != nil {
-		log.Fatal("pcap openlive err:", err)
+	var handle *pcap.Handle
+	var err error
+	if filename != "" {
+		handle, err = pcap.OpenOffline(filename)
+		if err != nil {
+			log.Fatal("[Error] pcap OpenOffline err", err)
+		}
+	} else {
+		handle, err = pcap.OpenLive(device, 65536, true, time.Second)
+		if err != nil {
+			log.Fatal("pcap openlive err:", err)
+		}
 	}
 
 	defer handle.Close()
