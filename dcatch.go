@@ -12,7 +12,7 @@ import (
 	"time"
 )
 
-var version = "0.0.2"
+var version = "0.0.3"
 
 func main() {
 	var device string
@@ -47,6 +47,8 @@ func main() {
 	}
 
 	defer handle.Close()
+
+  fmt.Printf("dcatch v%s: listening on %s\n", version, device)
 
 	packetSource := gopacket.NewPacketSource(handle, handle.LinkType())
 	for packet := range packetSource.Packets() {

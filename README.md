@@ -7,7 +7,7 @@ DHCP Request catcher
 https://github.com/zaftzaft/dcatch/releases
 
 # Usage
-```bash
+```console
 $ sudo dcatch
 192.168.0.30 Raspberry Pi Foundation[b8:27:eb:ff:ff:ff]@raspberry
 ```
