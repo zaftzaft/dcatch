@@ -3,13 +3,14 @@ package main
 import (
 	"flag"
 	"fmt"
+	"log"
+	"net"
+	"time"
+
 	"github.com/google/gopacket"
 	"github.com/google/gopacket/layers"
 	"github.com/google/gopacket/macs"
 	"github.com/google/gopacket/pcap"
-	"log"
-	"net"
-	"time"
 )
 
 var version = "0.0.3"
@@ -48,7 +49,7 @@ func main() {
 
 	defer handle.Close()
 
-  fmt.Printf("dcatch v%s: listening on %s\n", version, device)
+	fmt.Printf("dcatch v%s: listening on %s\n", version, device)
 
 	packetSource := gopacket.NewPacketSource(handle, handle.LinkType())
 	for packet := range packetSource.Packets() {
